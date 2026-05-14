@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; margin: 40px; color: #1a1a1a; max-width: 960px; }
+  h1 { font-size: 20pt; margin-top: 32px; margin-bottom: 4px; padding: 10px 16px; border-radius: 6px; }
+  h2 { font-size: 14pt; margin-top: 0; margin-bottom: 4px; padding: 8px 14px; border-radius: 5px; }
+  h3 { font-size: 11pt; font-weight: bold; margin-top: 16px; margin-bottom: 6px; color: #444; text-transform: uppercase; letter-spacing: 0.04em; }
+  p, li { font-size: 11pt; line-height: 1.5; }
+  ul { margin: 4px 0 8px 20px; }
+  a { color: #0066CC; }
+
+  table { border-collapse: collapse; width: 100%; margin-bottom: 12px; font-size: 10.5pt; }
+  th { padding: 7px 10px; text-align: left; font-weight: bold; border: 1.5px solid #aaa; }
+  td { padding: 6px 10px; border: 1px solid #bbb; vertical-align: top; }
+
+  .tip { padding: 7px 12px; border-left: 4px solid; border-radius: 0 4px 4px 0; margin: 8px 0 14px; font-size: 10.5pt; }
+  .tip-maria { padding: 7px 12px; border-left: 4px solid #cc66cc; border-radius: 0 4px 4px 0; margin: 8px 0 14px; font-size: 10.5pt; background: #fdf0ff; color: #5a005a; }
+
+  .day-card { border: 2px solid #ddd; border-radius: 8px; margin-bottom: 32px; overflow: hidden; }
+  .day-card-inner { padding: 16px 20px 12px; }
+  .section-banner { padding: 12px 20px; margin: 40px 0 0; border-radius: 8px 8px 0 0; font-size: 14pt; font-weight: bold; }
+
+  .travel .day-card { border-color: #ccc; }
+  .travel h2 { background: #e8e8e8; color: #333; }
+  .travel th { background: #d0d0d0; }
+  .travel td:first-child { background: #f5f5f5; font-weight: bold; }
+  .travel .tip { background: #f0f0f0; border-color: #999; }
+  .travel .section-banner { background: #555; color: white; }
+
+  .bangkok .day-card { border-color: #F5A623; }
+  .bangkok h2 { background: #FFF3CD; color: #5C3D00; }
+  .bangkok th { background: #FFE08A; color: #3d2800; }
+  .bangkok td:first-child { background: #FFF8E5; font-weight: bold; }
+  .bangkok .tip { background: #FFF8E5; border-color: #F5A623; }
+  .bangkok .section-banner { background: #F5A623; color: #3d2800; }
+
+  .chiangmai .day-card { border-color: #28A745; }
+  .chiangmai h2 { background: #D4EDDA; color: #155724; }
+  .chiangmai th { background: #A8D5B5; color: #0b3d1e; }
+  .chiangmai td:first-child { background: #EAF7EE; font-weight: bold; }
+  .chiangmai .tip { background: #EAF7EE; border-color: #28A745; }
+  .chiangmai .section-banner { background: #28A745; color: white; }
+
+  .kohtao .day-card { border-color: #0066CC; }
+  .kohtao h2 { background: #CCE5FF; color: #003d7a; }
+  .kohtao th { background: #99CAFF; color: #002952; }
+  .kohtao td:first-child { background: #E8F4FF; font-weight: bold; }
+  .kohtao .tip { background: #E8F4FF; border-color: #0066CC; }
+  .kohtao .section-banner { background: #0066CC; color: white; }
+
+  .tbd { color: #999; font-style: italic; }
+  .paid { color: #155724; font-weight: bold; }
+
+  .bookings-table th { background: #444; color: white; }
+  .bookings-table td:first-child { font-weight: bold; }
+  .costs-table th { background: #666; color: white; }
+
+  .index { background: #f8f8f8; border: 1px solid #ddd; border-radius: 8px; padding: 20px 28px; margin-bottom: 36px; }
+  .index h2 { background: none; color: #1a1a1a; font-size: 13pt; padding: 0; margin: 0 0 14px; }
+  .index-section { margin-bottom: 12px; }
+  .index-section-title { font-size: 10pt; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .index-section-title.bkk { color: #8a5500; }
+  .index-section-title.cm { color: #155724; }
+  .index-section-title.kt { color: #003d7a; }
+  .index-section-title.tr { color: #555; }
+  .index-grid { display: block; }
+  .index-grid a { font-size: 10.5pt; color: #0066CC; text-decoration: none; display: block; padding: 2px 0; }
+  .index-grid a:hover { text-decoration: underline; }
+  .index-info { font-size: 9.5pt; color: #555; padding: 2px 0 6px 2px; font-style: italic; }
+  .back-to-top { display: inline-block; font-size: 10pt; color: #0066CC; text-decoration: none; margin-top: 12px; }
+  .info-strip { padding: 8px 20px 10px; font-size: 10.5pt; border-bottom: 1px solid rgba(0,0,0,0.1); }
+  .info-strip p { margin: 2px 0; }
+  .bangkok .info-strip { background: #FFF8E5; }
+  .chiangmai .info-strip { background: #EAF7EE; }
+  .kohtao .info-strip { background: #E8F4FF; }
+  .travel .info-strip { background: #f5f5f5; }
+</style>
+</head>
+<body>
+
+<div id="top"></div>
+<h1 style="background:#333; color:white; font-size:22pt; padding:14px 20px; border-radius:8px; margin-bottom:8px;">🇹🇭 Thailand — Thomas &amp; Maria Elena</h1>
+<p style="color:#555; margin-bottom:24px; font-size:10.5pt;">May 23 – June 12 &nbsp;·&nbsp; 21 days &nbsp;·&nbsp; Bangkok · Chiang Mai · Koh Tao</p>
+
+<!-- INDEX -->
+<div class="index">
+  <h2>📋 Index</h2>
+  <div class="index-section">
+    <div class="index-section-title bkk">✈️ Bangkok — Day 1–4</div>
+    <div class="index-info">🏨 Hotel Clover · Soi Sukhumvit 16</div>
+    <div class="index-grid">
+      <a href="#day1"><strong>Sat May 23</strong> <span style="opacity:0.55;font-size:9pt;">(Day 1)</span> — Flying AMS → BKK</a>
+      <a href="#day2"><strong>Sun May 24</strong> <span style="opacity:0.55;font-size:9pt;">(Day 2)</span> — Acclimatise</a>
+      <a href="#day3"><strong>Mon May 25</strong> <span style="opacity:0.55;font-size:9pt;">(Day 3)</span> — Classic Bangkok</a>
+      <a href="#day4"><strong>Tue May 26</strong> <span style="opacity:0.55;font-size:9pt;">(Day 4)</span> — Modern Bangkok</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title tr">🚌 Travel</div>
+    <div class="index-grid">
+      <a href="#day5"><strong>Wed May 27</strong> <span style="opacity:0.55;font-size:9pt;">(Day 5)</span> — Bangkok → Chiang Mai</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title cm">🏔️ Chiang Mai — Day 6–10</div>
+    <div class="index-info">🏨 Wannamas Boutique House · Samlarn Road &nbsp;·&nbsp; 🚗 Europcar</div>
+    <div class="index-grid">
+      <a href="#day6"><strong>Thu May 28</strong> <span style="opacity:0.55;font-size:9pt;">(Day 6)</span> — Old Town &amp; Creative Chiang Mai</a>
+      <a href="#day7"><strong>Fri May 29</strong> <span style="opacity:0.55;font-size:9pt;">(Day 7)</span> — Meditation Day</a>
+      <a href="#day8"><strong>Sat May 30</strong> <span style="opacity:0.55;font-size:9pt;">(Day 8)</span> — Mountains &amp; Road Trip</a>
+      <a href="#day9"><strong>Sun May 31</strong> <span style="opacity:0.55;font-size:9pt;">(Day 9)</span> — Cooking &amp; Sunday Market</a>
+      <a href="#day10"><strong>Mon Jun 1</strong> <span style="opacity:0.55;font-size:9pt;">(Day 10)</span> — Sticky Waterfalls &amp; Spa</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title tr">🚌 Travel</div>
+    <div class="index-grid">
+      <a href="#day11"><strong>Tue Jun 2</strong> <span style="opacity:0.55;font-size:9pt;">(Day 11)</span> — Chiang Mai → Koh Tao</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title kt">🏝️ Koh Tao — Day 12–18</div>
+    <div class="index-info">🏨 The Rocks Villas · Sunset Villa · hilltop · 4.9 ★</div>
+    <div class="index-grid">
+      <a href="#day12"><strong>Wed Jun 3</strong> <span style="opacity:0.55;font-size:9pt;">(Day 12)</span> — Arrival · Sairee Beach · Mae Haad</a>
+      <a href="#day13"><strong>Thu Jun 4</strong> <span style="opacity:0.55;font-size:9pt;">(Day 13)</span> — Koh Nang Yuan day trip</a>
+      <a href="#day14"><strong>Fri Jun 5</strong> <span style="opacity:0.55;font-size:9pt;">(Day 14)</span> — Shark Bay · South Coast</a>
+      <a href="#day15"><strong>Sat Jun 6</strong> <span style="opacity:0.55;font-size:9pt;">(Day 15)</span> — Full rest day · Villa &amp; Sairee sunset</a>
+      <a href="#day16"><strong>Sun Jun 7</strong> <span style="opacity:0.55;font-size:9pt;">(Day 16)</span> — East Coast ride · Hin Wong Bay</a>
+      <a href="#day17"><strong>Mon Jun 8</strong> <span style="opacity:0.55;font-size:9pt;">(Day 17)</span> — Slow day · beach hopping · long lunch</a>
+      <a href="#day18"><strong>Tue Jun 9</strong> <span style="opacity:0.55;font-size:9pt;">(Day 18)</span> — Last day · favourite spot · goodbye</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title tr">🚌 Travel</div>
+    <div class="index-grid">
+      <a href="#day19"><strong>Wed Jun 10</strong> <span style="opacity:0.55;font-size:9pt;">(Day 19)</span> — Koh Tao → Bangkok</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title bkk">✈️ Bangkok — Day 20–21</div>
+    <div class="index-info">🏨 Accommodation TBD</div>
+    <div class="index-grid">
+      <a href="#day20"><strong>Thu Jun 11</strong> <span style="opacity:0.55;font-size:9pt;">(Day 20)</span> — Last Day Bangkok</a>
+      <a href="#day21"><strong>Fri Jun 12</strong> <span style="opacity:0.55;font-size:9pt;">(Day 21)</span> — Flying BKK → AMS</a>
+    </div>
+  </div>
+  <div class="index-section">
+    <div class="index-section-title" style="color:#333;">📋 Reference</div>
+    <div class="index-grid">
+      <a href="#bookings">Bookings &amp; Contacts</a>
+      <a href="#costs">Costs Overview</a>
+    </div>
+  </div>
+</div>
+
+<!-- ====== BANGKOK 1-4 ====== -->
+<div class="bangkok">
+<div class="section-banner">✈️ BANGKOK — Day 1–4</div>
+<div class="info-strip">
+  <p>🏨 <strong>Hotel:</strong> Hotel Clover · 9, 1 Soi Sukhumvit 16, Khlong Toei Nuea, Bangkok 10110</p>
+  <p>🌡️ <strong>Weather:</strong> Late May Bangkok — 33–36°C, humid, afternoon showers possible. Always carry water. Air-con everywhere is a relief.</p>
+</div>
+
+<div id="day1" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Sat May 23</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 1</span><br><span style="font-size:12pt;">Flying Amsterdam to Bangkok</span></h2>
+<div class="day-card-inner">
+
+<h3>Afternoon — Maarssen to Schiphol</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>12:30</td><td>Leave home</td><td>Dr. R. van Lutterveltstraat 52, Maarssen · Thomas: double-check passports, tickets and Thai SIM before closing the door</td><td>—</td></tr>
+  <tr><td>~12:45</td><td>Bus to Utrecht Centraal</td><td>Check NS/U-OV app for exact time and stop</td><td>—</td></tr>
+  <tr><td>~13:15</td><td>Train Utrecht Centraal → Schiphol</td><td>Direct Intercity · ±30 min · departs regularly</td><td>—</td></tr>
+  <tr><td>~13:45</td><td>Arrive Schiphol Airport</td><td>Follow signs to <strong>Departure Hall 3</strong> for KLM · drop checked bags first</td><td>—</td></tr>
+  <tr><td>14:15</td><td>Check in</td><td>KLM desk · Departure Hall 3 · or KLM app · 1 checked bag + backpack each</td><td>—</td></tr>
+  <tr><td>16:30</td><td>Boarding</td><td>Be at the gate — KLM is strict on boarding time</td><td>—</td></tr>
+  <tr><td>17:15</td><td>Departure</td><td>Flight <strong>KL843</strong> · KLM · AMS → Bangkok Suvarnabhumi (BKK) · ±11 hours</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Bangkok is +5 hrs ahead of the Netherlands in summer. Try to sleep on the plane — you land at 09:30 and will have a full day ahead. KLM serves dinner shortly after takeoff and breakfast before landing.</div>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> This is your first time in Asia. The moment you step off the plane the heat and humidity hit you immediately — it's intense but you'll adjust within a day. Have the Thai SIM ready to activate at the airport. And prepare to have your mind blown.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day2" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Sun May 24</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 2</span><br><span style="font-size:12pt;">Acclimatise — Bangkok Arrival Day</span></h2>
+<div class="day-card-inner">
+<p><em>Take it easy. Jet lag after an 11-hour flight is real. This is Maria Elena's first experience of Bangkok — let it sink in slowly.</em></p>
+
+<h3>Morning — Arrival &amp; Transfer</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>09:30</td><td>Arrival Bangkok Suvarnabhumi (BKK)</td><td>Activate Thai SIM immediately · <strong>GET CASH</strong> at airport ATM — Bangkok ATMs charge ±220 THB fee per withdrawal, so take out a larger amount (5,000–10,000 THB) to minimise fees</td><td>—</td></tr>
+  <tr><td>10:00</td><td>Airport Rail Link → Makkassan</td><td>Direction: <strong>Phaya Thai</strong> · ±30 THB · quick, air-conditioned and direct</td><td>—</td></tr>
+  <tr><td>10:20</td><td>Phetchaburi Metro → Sukhumvit</td><td>Direction: <strong>Lak Song</strong> (blue line) · exit Sukhumvit station · ±15 THB</td><td>—</td></tr>
+  <tr><td>10:40</td><td>Walk to Hotel Clover</td><td>±10 min · Soi Sukhumvit 16 is well signposted</td><td><a href="https://maps.app.goo.gl/GJ2JvRqJcxBVE9Jo6">Maps</a></td></tr>
+  <tr><td>12:00</td><td>Check in Hotel Clover</td><td>Request early check-in if possible · drop bags and freshen up · the pool is your best friend right now</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Sukhumvit is Bangkok's most international neighbourhood — buzzing, modern, and easy to navigate once you get your bearings. It can feel overwhelming at first but it makes sense quickly. The BTS skytrain connects everything above street level and keeps you out of the traffic.</div>
+
+<h3>Afternoon — First Impressions</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>12:00</td><td>Rest / sleep / pool</td><td>Seriously — sleep if you need to. The rest of the trip is full-on. A rested Day 2 makes everything better.</td><td>—</td></tr>
+  <tr><td>14:00</td><td>7/11 lunch run</td><td>Around the corner from the hotel · Maria Elena: Thai 7/11s are unlike European ones — freshly made rice balls, hot snacks, mango sticky rice, Thai iced tea. Get everything. It's all genuinely good.</td><td>—</td></tr>
+  <tr><td>15:00</td><td>Benjakitti Park walk</td><td>Elevated loop path around the lake · cool breeze through the trees · good gentle intro to Bangkok outdoors without being overwhelming</td><td><a href="https://maps.app.goo.gl/mgrfDgQFZBF4CUX29">Maps</a></td></tr>
+</table>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> A few things that will feel strange at first: motorbike taxis weaving through traffic (they're everywhere — it's fine), the smell of street food mixed with incense (you'll love it), and how cheap everything is. A full meal with drinks is often under €3. Let the culture shock wash over you — it's part of it.</div>
+
+<h3>Evening — Rooftop &amp; Night Market</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>18:00</td><td>Brewski Rooftop Beer Bar</td><td>Radisson Blu Plaza Bangkok · craft beers · panoramic city views · a perfect first Bangkok sunset · <a href="https://online.pubhtml5.com/mqbjz/tbpq/#p=1">View menu</a></td><td><a href="https://maps.app.goo.gl/PhuUhBDBki544SLg8">Maps</a></td></tr>
+  <tr><td>20:00</td><td>SW1 Night Market</td><td>Street food and night market · order boldly — grilled meats, pad kra pao, mango sticky rice, fresh coconut. Point at what looks good. That's how it works.</td><td><a href="https://maps.app.goo.gl/isSKB6BkWa5smSzLA">Maps</a></td></tr>
+  <tr><td>22:00</td><td>Back at hotel</td><td>Optional: quick walk through Soi Cowboy — Bangkok's famous neon entertainment street. Worth seeing once, even just to walk through.</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Don't stay out too late tonight — tomorrow is the Grand Palace and a full-day bike tour. An early night wins here.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day3" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Mon May 25</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 3</span><br><span style="font-size:12pt;">Classic Bangkok — Temples, Bikes &amp; Chinatown</span></h2>
+<div class="day-card-inner">
+<p><em>The quintessential Bangkok day — temples, a hidden bike tour through old Bangkok, and Chinatown at night. One of the best days anywhere in Southeast Asia.</em></p>
+
+<div class="tip">💡 <strong>Bring today:</strong> Loose clothing covering knees &amp; shoulders (elephant pants / sarong / scarf) · Salomons · Socks (shoes off in temples) · Cash · Water · Sunblock · Snack · Sunglasses · Hat · Ponchos — May is rainy season, afternoon showers come fast and heavy.</div>
+
+<h3>Morning — Grand Palace &amp; Wat Pho</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>08:00</td><td>Breakfast at Hotel Clover</td><td>Included · from 06:00 · eat well — it's a walking morning</td><td>—</td></tr>
+  <tr><td>08:30</td><td>Grab to Grand Palace</td><td>±20 min from Sukhumvit · Open Grab and set the destination. Avoid tuk-tuks for this journey — they'll try to take you on a "gem tour" detour. Always a scam.</td><td>—</td></tr>
+  <tr><td>09:30</td><td>Grand Palace</td><td>500 THB p.p. · One of the most spectacular things Maria Elena will ever see. The Emerald Buddha temple (Wat Phra Kaew) is inside the complex — tiny but intensely sacred. No photos inside the chapel. · <a href="https://en.wikipedia.org/wiki/Grand_Palace">Wikipedia</a> · <a href="https://en.wikipedia.org/wiki/Emerald_Buddha">Emerald Buddha</a></td><td><a href="https://maps.app.goo.gl/gWJKntVFmYYoXPLS8">Maps</a></td></tr>
+  <tr><td>10:45</td><td>Wat Pho</td><td>200 THB p.p. · Walk from Grand Palace · follow the signs · Famous for the 46m gold reclining Buddha and as the birthplace of traditional Thai massage. Worth a 30-min massage here if you have time (±260 THB). · <a href="https://en.wikipedia.org/wiki/Wat_Pho">Wikipedia</a></td><td><a href="https://maps.app.goo.gl/C6tcBsFb8RnGyEn57">Maps</a></td></tr>
+</table>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> You'll be approached by well-dressed locals outside the Grand Palace saying "it's closed today — I'll take you somewhere better." It's a scam. Ignore completely and walk straight to the entrance. The palace is almost never actually closed.</div>
+
+<h3>Afternoon — Ko van Kessel Bike Tour</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>12:00</td><td>Grab to Ko van Kessel</td><td>±10 min from Wat Pho area</td><td><a href="https://maps.app.goo.gl/p9HwHFpWncidrBZ98">Maps</a></td></tr>
+  <tr><td>13:00</td><td>Ko van Kessel bike tour</td><td><span class="paid">✓ Already paid in full</span> · meal and drinks included · ends ~19:00 · This tour goes through riverside backstreets and communities that most tourists never see — one of the best ways to experience the real Bangkok.</td><td>—</td></tr>
+</table>
+<div class="tip">💡 The tour winds through Bangkok's old Thonburi neighbourhood — temple courtyards, monks, market vendors, local life completely untouched by tourism. Follow the guide, go with the flow, don't rush anything.</div>
+
+<h3>Evening — Chinatown Street Food</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>19:00</td><td>Lim Lao Ngow — fishballs</td><td>Walk from Ko van Kessel · fishball noodle soup with rich broth · squeeze of lime · Maria Elena, this is the real deal</td><td><a href="https://maps.app.goo.gl/7QhnQT99yDebLuoP7">Maps</a></td></tr>
+  <tr><td>19:30</td><td>T&amp;K Seafood</td><td>Massive open-air seafood restaurant · order tiger prawns with garlic and pepper · grilled fish · morning glory stir fry (pad pak boong) · eat with your hands</td><td><a href="https://maps.app.goo.gl/RYk2iV3mwf4zQa8r7">Maps</a></td></tr>
+  <tr><td>20:30</td><td>Pa Tong Go Savoey — fried dough sticks</td><td>Classic Thai-Chinese street snack · crispy fried dough dipped in condensed milk or pandan custard · buy a bag and walk</td><td><a href="https://maps.app.goo.gl/SNcove32PmjRGTzDA">Maps</a></td></tr>
+  <tr><td>21:00</td><td>Soi Nana Street</td><td>Chinatown's hippest street · cocktail bars, jazz, local crowds · completely different from tourist Bangkok</td><td><a href="https://maps.app.goo.gl/eRE64a64WMaPcWWT8">Maps</a></td></tr>
+  <tr><td>23:00</td><td>Back to hotel</td><td>Any blue line metro to <strong>Sukhumvit</strong> · or Grab — at this hour Grab is easiest</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Yaowarat (Chinatown) at night is one of Bangkok's great experiences — neon-lit, loud, chaotic and delicious. Walk slowly, eat a lot, and don't be afraid to point at things you don't recognise. That's half the fun.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day4" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Tue May 26</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 4</span><br><span style="font-size:12pt;">Modern Bangkok — Shopping &amp; Sky Bar</span></h2>
+<div class="day-card-inner">
+<p><em>A lighter, more relaxed day. Maria Elena gets to see modern Bangkok — a completely different world from yesterday's temples and backstreets.</em></p>
+
+<h3>Morning — Breakfast &amp; Slow Start</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>09:00</td><td>Breakfast at Hotel Clover</td><td>Included · from 06:00 · take your time — you earned it yesterday</td><td>—</td></tr>
+</table>
+
+<h3>Afternoon — Shopping District</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>10:00</td><td>MBK Center</td><td><strong>Asok</strong> BTS → <strong>Siam</strong> BTS (direction: Khu Khot) · skywalk from Siam BTS · 8 floors of everything · ask staff for "secret rooms" — upper floors have local vendors with better prices · great for phone accessories, clothes, everything</td><td><a href="https://maps.app.goo.gl/Sqg7pyQYiTaBxhLX9">Maps</a></td></tr>
+  <tr><td>12:30</td><td>Lunch — MBK food court</td><td>Top floor · buy a food court card, load it up, graze. Pad see ew, green curry, mango sticky rice, fresh-squeezed juices. One of the best cheap lunches in Bangkok.</td><td>—</td></tr>
+  <tr><td>14:00</td><td>Siam Square</td><td>Walk through Siam Square 1 · Bangkok's young fashion district · bubble tea, street style, local designers · Maria Elena will enjoy this</td><td>—</td></tr>
+  <tr><td>14:30</td><td>Siam Paragon</td><td>Siam BTS (Siam Paragon exit) · upscale mall · worth a walk through for the basement food hall — excellent Japanese, Korean and Thai food stalls</td><td>—</td></tr>
+  <tr><td>16:00</td><td>Back to hotel — freshen up</td><td><strong>Siam</strong> BTS → <strong>Asok</strong> BTS (direction: Kheha) · tonight is a nice dinner — dress up a little</td><td><a href="https://maps.app.goo.gl/yb88tp14EQAMVAXb6">Maps</a></td></tr>
+</table>
+
+<h3>Evening — Sky Bar &amp; Nightlife</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>18:00</td><td>Cielo Sky Bar &amp; Restaurant</td><td>Reservation at 18:00 · deposit 3,000 THB (total, already arranged) · cocktails are excellent · order Thai-fusion dishes rather than Western options · <strong>Asok</strong> BTS → <strong>Phra Khanong</strong> BTS (direction: Kheha) · Tel: +66 0819164270 · <a href="https://www.cieloskybar.com">cieloskybar.com</a></td><td><a href="https://maps.app.goo.gl/PYfp1hV9kFcbM342A">Maps</a></td></tr>
+  <tr><td>Late</td><td>Sing Sing Theatre</td><td>Optional · beautiful art deco bar and club · good cocktails, eclectic crowd · worth at least one drink</td><td>—</td></tr>
+  <tr><td>Late</td><td>Nana Plaza / Soi Sukhumvit 11</td><td>Optional · loud, neon nightlife · nothing is obligatory here.</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Tomorrow is a travel day with a 14:55 flight. Don't go too crazy tonight — you need a comfortable morning.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+</div><!-- end bangkok -->
+
+<!-- ====== TRAVEL DAY 5 ====== -->
+<div class="travel">
+
+<div id="day5" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Wed May 27</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 5</span><br><span style="font-size:12pt;">Traveling — Bangkok to Chiang Mai</span></h2>
+<div class="day-card-inner">
+
+<h3>Morning — Checkout &amp; Airport</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>10:00</td><td>Breakfast at Hotel Clover</td><td>Included · from 06:00 · last Bangkok breakfast before checkout</td><td>—</td></tr>
+  <tr><td>11:00</td><td>Pack &amp; checkout</td><td>Hotel Clover · ask reception to store bags if you want to grab a last coffee first</td><td>—</td></tr>
+  <tr><td>11:45</td><td>Leave for airport</td><td><strong>Sukhumvit</strong> metro → <strong>Phetchaburi</strong> (blue line: direction Tha Phra) → Airport Rail Link from <strong>Makkassan</strong> → <strong>Suvarnabhumi</strong> · ±45 min total · or Grab if bags are heavy (±200–300 THB)</td><td>—</td></tr>
+  <tr><td>13:00</td><td>Arrive Suvarnabhumi (BKK)</td><td>Check in for Thai Airways · domestic terminal · check-in closes 45 min before departure</td><td>—</td></tr>
+  <tr><td>14:55</td><td>Departure to Chiang Mai</td><td>Flight <strong>TG112</strong> · Thai Airways · BKK → CNX · ±1h 20min</td><td>—</td></tr>
+</table>
+
+<h3>Afternoon — Arrival Chiang Mai</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>16:15</td><td>Arrival Chiang Mai (CNX)</td><td>Small, relaxed airport — a world away from Suvarnabhumi. Maria Elena, notice the change in atmosphere immediately.</td><td>—</td></tr>
+  <tr><td>16:30</td><td>Pick up Europcar</td><td>Desk in arrivals hall · check the car for existing damage before driving off · keep the key safe for the whole stay</td><td>—</td></tr>
+  <tr><td>17:30</td><td>Check in Wannamas Boutique House</td><td>9, 2 Samlan Rd Soi 1 · Old Town · your hotel is in the heart of the walled city — walk to almost everything from here</td><td><a href="https://maps.app.goo.gl/fRTwjA9Sn3s7eRwMA">Maps</a></td></tr>
+  <tr><td>19:00</td><td>First dinner in Chiang Mai</td><td>Ask the hotel staff — Wannamas is a boutique guesthouse and the owners know the neighbourhood well. Northern Thai food is earthier and richer than Bangkok food. Try khao soi if you haven't yet.</td><td>—</td></tr>
+</table>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> Chiang Mai will feel completely different from Bangkok — calmer, greener, cooler. The Old Town is surrounded by a moat and ancient city walls. Your hotel is right in the middle of it. This is where you'll really fall in love with Thailand.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+</div><!-- end travel -->
+
+<!-- ====== CHIANG MAI ====== -->
+<div class="chiangmai">
+
+<div class="section-banner">🏔️ CHIANG MAI — Day 6–10</div>
+<div class="info-strip">
+  <p>🏨 <strong>Hotel:</strong> Wannamas Chiangmai Boutique House · Samlarn Road, Old Town · <a href="https://maps.app.goo.gl/fRTwjA9Sn3s7eRwMA">Maps</a></p>
+  <p>🚗 <strong>Car:</strong> Europcar — park at hotel for temple days, use it for mountain and waterfall days</p>
+  <p>🌡️ <strong>Weather:</strong> Late May, start of rainy season · 30–34°C · mornings usually clear · afternoon rain possible · mountain areas 15–18°C — bring a layer for Day 8</p>
+</div>
+
+<div id="day6" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Thu May 28</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 6</span><br><span style="font-size:12pt;">Old Town Temples &amp; Creative Chiang Mai</span></h2>
+<div class="day-card-inner">
+<p><em>A gentle introduction to Chiang Mai — everything on foot from the hotel. Leave the car parked. No rush today.</em></p>
+
+<h3>Morning — Three Temples on Foot</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>08:00</td><td>Breakfast at Wannamas</td><td>Included · from 07:00 · eat well before the temples</td><td>—</td></tr>
+  <tr><td>08:45</td><td>Wat Phra Singh</td><td>3 min walk · 40 THB · Most important temple in Chiang Mai · classic Lanna architecture with sweeping rooflines and gilded chedi · arrive before tour buses (they come at 09:30)</td><td><a href="https://maps.app.goo.gl/byRKbps62jAR6VTN">Maps</a></td></tr>
+  <tr><td>09:45</td><td>Coffee break</td><td>Small cafés along Prapokklao Road · Northern Thai coffee is excellent — strong, often with sweetened condensed milk</td><td>—</td></tr>
+  <tr><td>10:15</td><td>Wat Chedi Luang</td><td>8 min walk · 50 THB · A 14th century chedi once 80m tall, partially destroyed by earthquake in 1545 — the scale is humbling. Elephant statues line the base. Optional: return after dinner for the evening laser show.</td><td><a href="https://maps.app.goo.gl/FRQRM5k62jARuqhL">Maps</a></td></tr>
+  <tr><td>11:15</td><td>Wat Chiang Man</td><td>6 min walk · Free · Oldest temple in Chiang Mai, built 1296 by King Mangrai. Quiet and intimate — often just a handful of visitors. The Crystal Buddha inside is tiny but incredibly sacred.</td><td><a href="https://maps.app.goo.gl/1zNhk5c62jAR3fJZ">Maps</a></td></tr>
+  <tr><td>12:15</td><td>Lunch in Old Town</td><td>Walk back slowly through small streets · look for khao soi — this is Maria Elena's first introduction to the signature dish of the north · coconut curry noodle soup · order it everywhere and compare</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Covered shoulders &amp; knees required at all three temples. Shoes off before entering any chapel. A sarong from any market works fine.</div>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> Chiang Mai's temples are active places of worship, not museums — monks live here, people come to pray, offerings are made daily. Walk quietly, don't point feet towards Buddha images, and take a moment to just sit and absorb the atmosphere. It's unlike anything in Europe.</div>
+
+<h3>Afternoon — Baan Kang Wat</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>13:30</td><td>Drive to Baan Kang Wat</td><td>±10 min towards Doi Suthep · park at the village entrance</td><td>—</td></tr>
+  <tr><td>14:00</td><td>Baan Kang Wat Artist Village</td><td>Traditional wooden houses converted into studios, craft shops, cafés and galleries · everything made by the artists who live here · no chains, no mass production · ±2 hours · Maria Elena will want to buy everything — this is the right place to do it</td><td><a href="https://maps.app.goo.gl/dxPPqzUx2jARn86G">Maps</a></td></tr>
+  <tr><td>16:00</td><td>Back to hotel</td><td>Rest and freshen up · tonight is Han Teung so arrive hungry</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Open Tue–Sun 10:00–18:00. Farm Story café for single-origin Northern Thai coffee. Note-a-Book for handmade notebooks — excellent souvenir.</div>
+
+<h3>Evening — Han Teung Northern Thai Dinner</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>17:30</td><td>Han Teung Chiangmai</td><td>4.7 ★ · reserve in advance · 17:30–18:00 for quieter table, or after 19:30 once first rush clears · open until 21:30</td><td><a href="https://maps.app.goo.gl/o-HFUHA62jAR5dGb">Maps</a></td></tr>
+</table>
+<p><strong>Must order — Northern Thai classics:</strong></p>
+<ul>
+  <li><strong>Northern appetizer platter</strong> — best way to try everything at once</li>
+  <li><strong>Sai ua</strong> — herbed pork sausage fragrant with lemongrass and galangal</li>
+  <li><strong>Nam prik noom</strong> — roasted green chilli dip with vegetables and pork crackling · spicier than it looks</li>
+  <li><strong>Hang lay curry</strong> — slow-cooked Burmese-style pork curry, rich and complex</li>
+  <li><strong>Khao soi</strong> — if Maria Elena hasn't had it yet, she must have it here</li>
+  <li><strong>Crispy pork (moo krop)</strong> — the Northern Thai version is some of the best in the country</li>
+  <li><strong>Sticky rice</strong> — order extra, you'll need it to balance the chilli</li>
+</ul>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> Northern Thai food is your first deep-dive into regional Thai cuisine — less sweet and more herbal than Bangkok, with Burmese and Yunnanese influences. Use the sticky rice to balance the heat from the nam prik noom. Eat slowly and try everything.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day7" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Fri May 29</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 7</span><br><span style="font-size:12pt;">Meditation Day — Wat Suan Dok</span></h2>
+<div class="day-card-inner">
+<p><em>A full day of stillness. A real meditation course run by monks — not a tourist activity. Both of you will come away from this differently than you arrived.</em></p>
+
+<h3>Programme</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>07:30</td><td>Breakfast at Wannamas</td><td>Included · from 07:00 · eat before heading out · meditation starts at 09:00 so plenty of time</td><td>—</td></tr>
+  <tr><td>08:30</td><td>Walk to Wat Suan Dok</td><td>±15 min walk from hotel · arrive before 09:00 · covered shoulders and knees · no shoes inside</td><td><a href="https://maps.app.goo.gl/42GuDLXm8tJRuRz7A">Maps</a></td></tr>
+  <tr><td>09:00</td><td>Meet at Monk Chat Office</td><td>Introduction to Buddhism &amp; Meditation · the monks speak excellent English and are genuinely interested in talking with you — not performing for tourists</td><td>—</td></tr>
+  <tr><td>10:30</td><td>Meditation Practice</td><td>Guided sitting and walking meditation · go in with an open mind and fresh eyes — whatever your experience with meditation</td><td>—</td></tr>
+  <tr><td>11:30</td><td>Lunch</td><td>Simple lunch · eat lightly</td><td>—</td></tr>
+  <tr><td>13:00</td><td>Meditation Practice</td><td>Afternoon session — often the most powerful one</td><td>—</td></tr>
+  <tr><td>14:30</td><td>Break</td><td>Rest, walk the temple grounds, sit quietly</td><td>—</td></tr>
+  <tr><td>16:00</td><td>Discussion</td><td>Open conversation with the monks · ask anything — they enjoy real questions</td><td>—</td></tr>
+  <tr><td>17:00</td><td>Group Photo / The end</td><td>Walk home slowly · you'll want the quiet</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Donation based · suggested 2,000–3,000 THB for the two of you · bring cash · switch phones to silent for the full day. Tonight: eat something light, skip the alcohol, sleep early. Tomorrow is a 04:30 alarm.</div>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> No prior meditation experience needed — none is expected. The monks are kind and non-judgmental. If sitting still for long periods is hard at first, that's completely normal. Just breathe. This day is worth every minute you give it.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day8" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Sat May 30</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 8</span><br><span style="font-size:12pt;">Mountains &amp; Road Trip — Doi Suthep + Doi Inthanon + Karen Village</span></h2>
+<div class="day-card-inner">
+<p><em>The big day. Early alarm, big drive, big views. Pack the car tonight — jacket, water, snacks, swimwear for tomorrow. Doi Inthanon can be 15°C at the top.</em></p>
+
+<h3>Early Morning — Doi Suthep Sunrise &amp; Tak Bat</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>04:45</td><td>Wake up · coffee · car</td><td>Set two alarms · too early for hotel breakfast today (starts at 07:00) — grab a snack from your bag or buy something at a café on the mountain road after the temple</td><td>—</td></tr>
+  <tr><td>05:00</td><td>Depart from hotel</td><td>Route via Huay Kaew Road straight up the mountain · 15 km · ±30 min · no traffic at this hour · drive fast enough to be at the temple before sunrise</td><td>—</td></tr>
+  <tr><td>05:30</td><td>Arrive Wat Phra That Doi Suthep</td><td>30 THB · Take the Naga staircase (306 steps) immediately — you have about 25 minutes before sunrise · the chedi is already lit and glowing in the predawn dark</td><td><a href="https://maps.app.goo.gl/td3x37U52jARIX7F">Maps</a></td></tr>
+  <tr><td>05:57</td><td>Sunrise 🌅</td><td>Exact sunrise time on May 30th in Chiang Mai · the golden chedi catches the first light · Chiang Mai spreads below you in the morning mist · take your time · no rush to leave</td><td>—</td></tr>
+  <tr><td>06:30</td><td>Descend — Tak Bat at Kruba Srivichai Monument</td><td>Walk back down the Naga staircase · the <strong>Tak Bat (alms giving)</strong> runs 05:45–06:30 at the monument at the foot of the stairs · you'll catch the end of it · saffron-robed monks receiving food offerings from locals · vendors sell offering sets on site if you want to participate</td><td>—</td></tr>
+  <tr><td>07:15</td><td>Wat Pha Lat — morning light</td><td>Drive a short way back down the mountain road · park and walk in · jungle temple with a waterfall running through the grounds · morning light through the canopy, mist still in the trees, birds · free · ±30 min</td><td><a href="https://maps.app.goo.gl/66D0IBo62jARiGi7">Maps</a></td></tr>
+  <tr><td>08:00</td><td>Breakfast with a view</td><td>Terrace café on the mountain road · your breakfast today since you left too early for the hotel · coffee and something good before heading south to Doi Inthanon</td><td>—</td></tr>
+</table>
+<div class="tip">💡 <strong>Tak Bat etiquette:</strong> Dress modestly — shoulders and knees covered (you'll already be dressed for the temple). Stand back from the procession and keep quiet. Women should not hand anything directly to a monk — place offerings in the bowl or hand to a male intermediary. No flash photography. This is a genuine daily religious act, not a tourist performance.</div>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> Sunrise over the golden chedi at 05:57, then saffron robes and soft chanting at the monument on the way down, then a jungle waterfall temple in morning light. This is one of the great mornings in travel — anywhere in the world.</div>
+
+<h3>Morning — Road Trip to Doi Inthanon</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>08:30</td><td>Drive south to Doi Inthanon</td><td>±90 km · ±1.5 hrs via Route 108 through Chom Thong · beautiful mountain road · windows down</td><td>—</td></tr>
+  <tr><td>10:00</td><td>Wachirathan Waterfall</td><td>First stop inside the park · powerful waterfall year-round · spray creates rainbows on clear mornings · short walk from car park · you will get wet from the mist — embrace it · included in park entry</td><td><a href="https://maps.app.goo.gl/6z5GnTis2zARN37P">Maps</a></td></tr>
+  <tr><td>10:45</td><td>Twin Royal Pagodas</td><td>Built to honour King Rama IX and Queen Sirikit · beautifully landscaped gardens at altitude · panoramic views on a clear morning · free shuttle from car park · open 07:00–17:00 · covered shoulders required · ±45 min</td><td><a href="https://maps.app.goo.gl/G2OCIpwA2zARklbF">Maps</a></td></tr>
+  <tr><td>12:00</td><td>Lunch in the park</td><td>Food stalls near the pagodas · eat before the village visit</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Park entry: 300 THB/person + 20 THB car — pay at the gate. Bring the jacket here — noticeably cooler than Chiang Mai, especially at the pagodas.</div>
+
+<h3>Afternoon — Karen Hill Tribe Village &amp; Return</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>13:30</td><td>Ban Mae Klang Luang</td><td>Karen hill tribe village inside the national park · rice terraces carved into the hillside · a family runs a tiny coffee shop using beans grown on their own farm — have a cup · bamboo bridge over the stream · slow walk through the village · ±1.5 hours</td><td><a href="https://maps.app.goo.gl/Zd4c-8Cr2zARiC-5">Maps</a></td></tr>
+  <tr><td>15:15</td><td>Drive back to Chiang Mai</td><td>±1.5 hrs · you'll be tired in the best possible way</td><td>—</td></tr>
+  <tr><td>17:00</td><td>Hotel</td><td>Shower · rest · spa in 2 hours</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Visit Ban Mae Klang Luang with genuine respect — people live and work here. Don't photograph people without a gesture of permission. Buying coffee from the local family is a good way to support the community directly.</div>
+
+<h3>Evening — Makkha Spa</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>19:00</td><td>Makkha Health &amp; Spa — Ancient House</td><td>Soi Ratchamanka 8 · 10 min walk · scrub + aroma massage package · ±2 hours · mango sticky rice afterwards · after a 04:30 start and mountain road trip, this will feel like absolute heaven for both of you</td><td><a href="https://maps.app.goo.gl/GV4FvZw62jARNmHq">Maps</a></td></tr>
+</table>
+<div class="tip">💡 Book in advance at makkhaspa.com — they fill up fast on Saturdays.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day9" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Sun May 31</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 9</span><br><span style="font-size:12pt;">Cooking Class &amp; Sunday Walking Street</span></h2>
+<div class="day-card-inner">
+<p><em>A day built entirely around food — which is right for two people who aren't afraid of weird ingredients. Maria Elena will talk about this day when she gets home.</em></p>
+
+<h3>Morning — Zabb E Lee Cooking Class</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>07:00</td><td>Breakfast at Wannamas</td><td>Included · from 07:00 · eat quickly before pick up — you're on the road at 08:00</td><td>—</td></tr>
+  <tr><td>08:00</td><td>Pick up at hotel</td><td>Zabb E Lee picks you up at Wannamas · be ready in the lobby · leave the car parked today</td><td>—</td></tr>
+  <tr><td>08:30</td><td>Market visit — Somphet Market</td><td>Instructor (ask for <strong>Bo</strong>) walks you through the market explaining every ingredient — galangal vs ginger, fresh vs dried chillies, what makes Northern Thai paste different from Bangkok paste. Maria Elena, this is the best food education you'll get anywhere.</td><td><a href="https://maps.app.goo.gl/3x3B6ZA62jARvdzT">Maps</a></td></tr>
+  <tr><td>09:30</td><td>Drive to cooking school campus</td><td>Looks like a boutique resort — outdoor cooking stations, lush gardens, beautiful setting. Nothing like a cooking class back home.</td><td>—</td></tr>
+  <tr><td>10:00</td><td>Cook 4 courses</td><td>Make curry paste from scratch (mortar and pestle — real effort), then cook 4 dishes · everything from scratch · you eat what you make · 5.0 ★ · 3,200+ reviews</td><td>—</td></tr>
+  <tr><td>13:00</td><td>Return to Chiang Mai</td><td>Transport back included · you'll be full and happy</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Book via WhatsApp +66 93 267 9572. Ask for instructor Bo — mentioned by name in dozens of reviews. The recipes come home with you so Maria Elena can recreate them in Maarssen.</div>
+
+<h3>Afternoon — Free</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>14:00</td><td>Rest, coffee, Old Town wander</td><td>No agenda · browse Old Town or drive to Nimman Road (10 min) for specialty coffee and design shops</td><td>—</td></tr>
+</table>
+
+<h3>Evening — Sunday Walking Street</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>17:00</td><td>Sunday Walking Street — Wualai Road</td><td>±1.5 km of stalls · the best street market in Chiang Mai · local silverwork, handmade textiles, hill tribe crafts, ceramics · every 50m there's something to eat · start at the north end and work south · open until ±22:00</td><td><a href="https://maps.app.goo.gl/_5-9gHUw2jARGOGQ">Maps</a></td></tr>
+</table>
+<div class="tip">💡 Go at 17:00 when it opens — best pick of stalls before the crowds. By 19:00 it's shoulder to shoulder. Maria Elena: the silverwork on Wualai Road is genuinely special and significantly cheaper than Europe. Leave room in the checked bag for it.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day10" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Mon Jun 1</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 10</span><br><span style="font-size:12pt;">Sticky Waterfalls &amp; Spa — Last Day in Chiang Mai</span></h2>
+<div class="day-card-inner">
+<p><em>Active in the morning, indulgent in the evening. Pack tonight — flight tomorrow is at 11:35, car return at airport by 09:00.</em></p>
+
+<h3>Morning — Bua Tong Sticky Waterfalls</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>07:30</td><td>Breakfast at Wannamas</td><td>Included · from 07:00 · last morning at the hotel · eat well before the drive</td><td>—</td></tr>
+  <tr><td>08:30</td><td>Drive north to Bua Tong</td><td>±1 hour · Route 107 north · use Google Maps — the turn-off is easy to miss</td><td>—</td></tr>
+  <tr><td>09:30</td><td>Bua Tong Sticky Waterfalls</td><td>Limestone waterfalls coated in calcium carbonate — you can climb barefoot without slipping. Unlike any waterfall anywhere in the world. Go all the way to the bottom and climb back up through the water. ±2.5 hours · Free · closes 16:30</td><td><a href="https://maps.app.goo.gl/u1M68-cb2jARc3Tl">Maps</a></td></tr>
+  <tr><td>10:15</td><td>Nam Phu Chet Si — Seven Colours Spring</td><td>5 min walk from the waterfalls · mineral spring pooling in different shades of blue and green · small but genuinely beautiful · free · bring a sarong (religious site)</td><td><a href="https://maps.app.goo.gl/kfOCn3Ab2jARALUD">Maps</a></td></tr>
+  <tr><td>12:00</td><td>Lunch at the park</td><td>Food stalls near the entrance · eat before the drive back</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Lockers 30 THB · wear swimwear under clothes · avoid black patches on the rocks (those are algae, genuinely slippery — unlike the white limestone). Maria Elena: this is pure joy. Just go with it.</div>
+
+<h3>Afternoon — Return &amp; Rest</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>13:00</td><td>Drive back to Chiang Mai</td><td>±1 hour · last drive with the Europcar · return it tomorrow at CNX airport</td><td>—</td></tr>
+  <tr><td>14:00</td><td>Hotel — rest &amp; pack</td><td>Pack tonight so tomorrow morning is stress-free · keep only overnight essentials in your backpack</td><td>—</td></tr>
+</table>
+
+<h3>Evening — Makkha Spa &amp; Last Dinner</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>17:00</td><td>Makkha Health &amp; Spa — Ancient House</td><td>Soi Ratchamanka 8 · 10 min walk · body scrub + aromatic bath + massage · ±2–3 hours · mango sticky rice at the end · the right way to say goodbye to Chiang Mai</td><td><a href="https://maps.app.goo.gl/GV4FvZw62jARNmHq">Maps</a></td></tr>
+  <tr><td>20:30</td><td>Last dinner in Chiang Mai</td><td>Somewhere quiet in Old Town · ask Makkha staff for a recommendation · nothing too heavy — early start tomorrow</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Book Makkha in advance at makkhaspa.com. Set your alarm tonight — you need to be at the airport by 09:00 for the Koh Samui flight.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+</div><!-- end chiangmai -->
+
+<!-- ====== TRAVEL DAY 11 ====== -->
+<div class="travel">
+
+<div id="day11" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Tue Jun 2</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 11</span><br><span style="font-size:12pt;">Traveling — Chiang Mai → Koh Samui → Koh Tao</span></h2>
+<div class="day-card-inner">
+<p><em>A long travel day — flight, taxi, ferry. But you arrive somewhere extraordinary. Keep snacks in your backpack.</em></p>
+
+<h3>Morning — Flight to Koh Samui</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>07:30</td><td>Breakfast at Wannamas</td><td>Included · from 07:00 · last Chiang Mai breakfast · eat before heading to the airport</td><td>—</td></tr>
+  <tr><td>09:00</td><td>Leave for CNX airport</td><td>Return Europcar at the airport desk · allow time for the return process · 2 hours before flight is correct</td><td>—</td></tr>
+  <tr><td>11:35</td><td>Departure to Koh Samui</td><td>Flight <strong>PG242</strong> · Bangkok Airways · CNX → USM · ±1h 45min · snack included</td><td>—</td></tr>
+  <tr><td>13:20</td><td>Arrival Koh Samui (USM)</td><td>Beautiful small airport surrounded by palms · collect bags · head to taxi rank</td><td>—</td></tr>
+  <tr><td>13:30</td><td>Taxi to Nathon Pier</td><td>Nathon Pier is on the west coast · ±25 min · agree price before getting in · ±300 THB · do not take tuk-tuks for this distance with luggage</td><td>—</td></tr>
+</table>
+
+<h3>Afternoon — Lomprayah Ferry to Koh Tao</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>15:15</td><td>Arrive at Nathon Pier</td><td>Check in for Lomprayah · ticket ready (printed or phone) · small café at the pier · cold drink and relax</td><td>—</td></tr>
+  <tr><td>16:00</td><td>Lomprayah ferry departs</td><td>Nathon Pier → Koh Tao · ±2 hours · fast catamaran · can be choppy — sit in the middle if either of you is sensitive to motion · watch the sea turn deeper blue as you head north</td><td>—</td></tr>
+  <tr><td>~18:00</td><td>Arrival Mae Haad Pier, Koh Tao</td><td>The Rocks Villas driver (Mr Boy) will be waiting at the pier to pick you up · no need to arrange anything · just look for him</td><td>—</td></tr>
+  <tr><td>~18:30</td><td>Check in — The Rocks Villas</td><td>Sunset Villa · hilltop location · steep climb to the villa but Mr Boy handles the transfer · 4.9 ★ · Tel: +66 86 270 7145</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJicygo-ahVTAR_rBWaX07-48">Maps</a></td></tr>
+</table>
+<div class="tip">💡 Tonight: keep it simple. Shower, find a beach bar near the pier, cold Singha, pad thai or massaman curry, early night. You have 7 full days on Koh Tao.</div>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> The moment you arrive at Koh Tao you'll understand why people come here and never want to leave. The water is genuinely that blue. The pace drops to almost nothing. This is the reward for the temples and early mornings.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+</div><!-- end travel -->
+
+<!-- ====== KOH TAO ====== -->
+<div class="kohtao">
+
+<div class="section-banner">🏝️ KOH TAO — Day 12–18</div>
+<div class="info-strip">
+  <p>🏨 <strong>Accommodation:</strong> The Rocks Villas · Sunset Villa · hilltop with panoramic bay views · 4.9 ★ · <a href="https://www.google.com/maps/place/?q=place_id:ChIJicygo-ahVTAR_rBWaX07-48">Maps</a></p>
+  <p>🚗 <strong>Transfer:</strong> Driver picks you up at Mae Haad pier on arrival · contact: +66 86 270 7145 · Mr Boy handles all transfers on the island</p>
+  <p>🌡️ <strong>Weather:</strong> Early June · 30–33°C · warm sea (28°C) · some rain possible but usually short-lived · excellent diving visibility</p>
+  <p>🤿 <strong>Diving:</strong> Koh Tao is one of the world's best and most affordable places to dive. If Maria Elena has never dived, this is where to learn — PADI Open Water takes 3–4 days, ±10,000 THB. Thomas, consider fun dives or an advanced course while she learns.</p>
+</div>
+
+<div id="day12" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Wed Jun 3</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 12</span><br><span style="font-size:12pt;">Arrival Day — Settle In &amp; Sairee Beach</span></h2>
+<div class="day-card-inner">
+<p><em>First full day. Slow start, get your bearings, find your rhythm.</em></p>
+
+<h3>Morning</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Morning</td><td>Breakfast at Breeze Restaurant</td><td>Beachfront in Mae Haad · excellent coffee, fresh food · a good first morning out · sets the tone for the week</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJmwrPG5KhVTARZUqZdPVrbAQ">Maps</a></td></tr>
+  <tr><td>Morning</td><td>Explore Mae Haad town</td><td>Browse the main street · Maria Elena: good boutique clothing and jewellery shops here · reef-safe sunscreen if you need it</td><td>—</td></tr>
+  <tr><td>Morning</td><td>Rent a scooter</td><td>Several rental shops in Mae Haad · ±200–250 THB/day · bring your licence · the roads are steep in places — take it easy the first day</td><td>—</td></tr>
+  <tr><td>Morning</td><td>Stock up the kitchen</td><td>Small supermarket near the pier · fruit, yoghurt, bread, coffee, eggs, snacks for the week · the villa has a kitchen so you have everything for slow mornings in</td><td>—</td></tr>
+</table>
+
+<h3>Afternoon — Sairee Beach</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Afternoon</td><td>Sairee Beach</td><td>Longest beach on Koh Tao · 10 min scooter north of Mae Haad · soft sand, clear water, beach bars · snorkel off the rocks at the north end · find a sunbed, order cold drinks, do nothing</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJZQRiX--hVTARRdqTXjlbGwA">Maps</a></td></tr>
+</table>
+
+<h3>Late Afternoon — Back to Villa</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~16:30</td><td>Back to The Rocks Villas</td><td>Freshen up · drinks on the terrace · watch the bay turn golden</td><td>—</td></tr>
+</table>
+
+<h3>Evening</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>Mae Haad Seafood &amp; Sairee cocktails</td><td>Mae Haad Seafood near the pier for dinner — tiny local restaurant run by an elderly couple · outrageously fresh fish and prawns · 4.6 ★ · then scooter to Sairee for cocktails and the night scene</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJs8rP3ZGhVTAROmnQTmEEgew">Maps</a></td></tr>
+</table>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day13" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Thu Jun 4</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 13</span><br><span style="font-size:12pt;">Koh Nang Yuan — The Island on the Island</span></h2>
+<div class="day-card-inner">
+<p><em>The unmissable day trip. Go earlier rather than later — the island gets crowded from 10:00 when day-tripper boats arrive from Koh Samui.</em></p>
+
+<h3>Morning — Koh Nang Yuan</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Morning</td><td>Scooter to Sairee Beach (north end)</td><td>Long-tail boats to Koh Nang Yuan depart from the north end of Sairee Beach · ±10 min from Mae Haad</td><td>—</td></tr>
+  <tr><td></td><td>💡 Breakfast tip</td><td>Grab a coffee and something to eat at one of the cafés on Sairee Beach Road before the boat — several good spots open early along the strip</td><td>—</td></tr>
+  <tr><td>Morning</td><td>Long-tail boat to Koh Nang Yuan</td><td>±10 min crossing · ±100–200 THB · entry fee 250 THB foreigners · <strong>no plastic bottles on the island</strong> — bring a reusable one</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJMTP32lKfVTARedHNqkVkRW0">Maps</a></td></tr>
+  <tr><td>Morning</td><td>Explore Koh Nang Yuan</td><td>Walk the white sand spit connecting the three peaks · snorkel the Japanese Gardens coral reef — best coral on Koh Tao, colourful fish, excellent visibility · climb to the viewpoint for the iconic panoramic shot · swim between the beaches · take your time</td><td>—</td></tr>
+  <tr><td>~11:00</td><td>Head back before the crowds</td><td>Leave by 11:00–11:30 to beat the day-tripper rush · long-tail back to Sairee</td><td>—</td></tr>
+</table>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> The sand spit at Koh Nang Yuan is one of those places that doesn't look real — crystal water on both sides, white sand underfoot, mountains behind you. Take your time here.</div>
+
+<h3>Afternoon — Mango Bay</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Afternoon</td><td>Mango Bay (optional)</td><td>Secluded bay on the north coast · calm, good snorkelling, tiny beach · short scooter from Sairee · or skip it and go straight back to the villa</td><td>—</td></tr>
+</table>
+
+<h3>Late Afternoon — Back to Villa</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~16:30</td><td>Back to The Rocks Villas</td><td>Freshen up · terrace drinks · the view from the Sunset Villa at this hour is exceptional</td><td>—</td></tr>
+</table>
+
+<h3>Evening</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>NDIIGO Beach Club</td><td>Sairee Beach · 4.7 ★ · great food and cocktails · stunning ocean view · excellent Tom Yum · relaxed beach club atmosphere</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJBxHjfGShVTARCEKs5f-N0UE">Maps</a></td></tr>
+</table>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day14" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Fri Jun 5</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 14</span><br><span style="font-size:12pt;">Shark Bay — Turtles &amp; South Coast</span></h2>
+<div class="day-card-inner">
+<p><em>Best chance of spotting turtles and reef sharks early in the morning before the tour boats arrive. Worth getting out a bit earlier today.</em></p>
+
+<h3>Morning — Shark Bay Snorkelling</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Morning</td><td>Scooter to Shark Bay (Ao Leuk)</td><td>South of the island · ±15 min · follow signs · 50 THB entry · shallow, clear, calm water</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJd-gGE52hVTARaXCHLFy29Lg">Maps</a></td></tr>
+  <tr><td></td><td>💡 Breakfast tip</td><td>Small café at Shark Bay serves drinks and snacks — grab something there on arrival before you get in the water</td><td>—</td></tr>
+  <tr><td>Morning</td><td>Snorkel Shark Bay</td><td>Blacktip reef sharks on the sandy bottom — small and completely harmless · turtles spotted regularly in the morning · go straight in when you arrive · ±1.5–2 hours</td><td>—</td></tr>
+</table>
+<div class="tip">💡 The earlier you're in the water the better for turtle and shark sightings — they move off once the tour boats start arriving mid-morning.</div>
+
+<h3>Afternoon — Chalok Baan Kao &amp; Freedom Beach</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Afternoon</td><td>Chalok Baan Kao Bay</td><td>Calm south coast bay · several beach bars · quieter and more local feeling than Sairee · good sunset from the left side</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJ5Yan6nehVTAR011Eqc97iL8">Maps</a></td></tr>
+  <tr><td>Afternoon</td><td>Freedom Beach</td><td>Tiny secluded beach near Chalok · short walk from the road · almost always quiet · no facilities · bring water</td><td>—</td></tr>
+</table>
+
+<h3>Late Afternoon — Back to Villa</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~16:30</td><td>Back to The Rocks Villas</td><td>Freshen up · cold drink on the terrace</td><td>—</td></tr>
+</table>
+
+<h3>Evening</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>Mae Haad evening stroll &amp; dinner</td><td>Browse the evening market stalls · Maria Elena: handmade jewellery and clothing stalls open up in the evening · dinner at any local restaurant along the pier · cocktails after</td><td>—</td></tr>
+</table>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day15" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Sat Jun 6</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 15</span><br><span style="font-size:12pt;">Full Rest Day — Villa &amp; Sairee Sunset</span></h2>
+<div class="day-card-inner">
+<p><em>No scooter today. Stay close, do as little as possible. The Sunset Villa has one of the best views on the island — use it.</em></p>
+
+<h3>Morning &amp; Afternoon — Villa Day</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>All day</td><td>The Rocks Villas</td><td>Sleep as long as you want · breakfast from the villa kitchen · read · swim · watch the boats in the bay · this is what the Sunset Villa is for · no agenda</td><td>—</td></tr>
+  <tr><td>Afternoon</td><td>Massage</td><td>Several good massage spots in Mae Haad and Sairee · ±300–500 THB/hr · ask Mr Boy for a recommendation · Thai massage after days of snorkelling is perfect</td><td>—</td></tr>
+</table>
+<div class="tip">💡 The reviews for The Rocks Villas mention sitting for hours just watching the bay. Today is that day. You've done enough — let the island come to you.</div>
+
+<h3>Late Afternoon — Sairee Sunset</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~17:00</td><td>Scooter to Sairee for sunset</td><td>Sairee faces west — best sunset beach on the island · find a spot on the sand with a cocktail · fire show some evenings</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJZQRiX--hVTARRdqTXjlbGwA">Maps</a></td></tr>
+</table>
+
+<h3>Evening</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>Dinner along Sairee Beach</td><td>Plenty of options along Sairee Beach Road · no need to plan — just walk until something looks good · cocktails after on the beach</td><td>—</td></tr>
+</table>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day16" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Sun Jun 7</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 16</span><br><span style="font-size:12pt;">East Coast Ride — Hin Wong &amp; John Suwan Viewpoint</span></h2>
+<div class="day-card-inner">
+<p><em>The wilder, quieter side of Koh Tao. Dramatic rocky bays, deep clear water, almost no tourists. The road is steep — take it slow and enjoy the ride.</em></p>
+
+<h3>Morning — East Coast by Scooter</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Morning</td><td>Scooter east coast route</td><td>Head east from Mae Haad · road climbs steeply into the hills before dropping to the bays · go slow · views from the top are spectacular</td><td>—</td></tr>
+  <tr><td></td><td>💡 Breakfast tip</td><td>Stop at any café along the main road on the way out of Mae Haad — several good options before the road turns east and gets remote</td><td>—</td></tr>
+  <tr><td>Morning</td><td>Hin Wong Bay — snorkel</td><td>East coast · dramatic granite boulders tumbling into deep turquoise water · excellent snorkelling among the rocks · very few people · one small beach bar · ±1.5 hours</td><td>—</td></tr>
+  <tr><td>Morning</td><td>John Suwan Viewpoint</td><td>Shared entry with Shark Bay (50 THB) · hilltop viewpoint over the south bay · panoramic views of both sides of the island · short climb</td><td>—</td></tr>
+</table>
+<div class="tip">💡 The east coast road is the most challenging riding on the island — steep, narrow and rough in places. Go slowly on the corners. The scenery makes it worth it.</div>
+
+<h3>Afternoon — Aow Leuk Bay</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Afternoon</td><td>Aow Leuk Bay snorkelling</td><td>South-east coast · shallow, sheltered, crystal clear · good coral and fish · one of the best snorkelling beaches you can ride to · quieter than the west coast</td><td>—</td></tr>
+</table>
+
+<h3>Late Afternoon — Back to Villa</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~16:30</td><td>Back to The Rocks Villas</td><td>Freshen up · it's been a full day on the scooter · cold drink on the terrace</td><td>—</td></tr>
+</table>
+
+<h3>Evening</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>Mae Haad Sunday evening stroll &amp; dinner</td><td>Sunday evening market in Mae Haad · local food, crafts and clothing · Maria Elena: the craft scene here is genuinely creative — hand-painted shells, sea glass jewellery, hand-dyed fabrics · dinner and cocktails after</td><td>—</td></tr>
+</table>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day17" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Mon Jun 8</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 17</span><br><span style="font-size:12pt;">Slow Day — Beach Hopping &amp; Long Lunch</span></h2>
+<div class="day-card-inner">
+<p><em>A gentle, unplanned day. Pick two beaches, snorkel when you feel like it, eat slowly, drink slowly.</em></p>
+
+<h3>Morning — Snorkel</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Morning</td><td>Japanese Gardens snorkel</td><td>North of Koh Tao · accessible by scooter and short long-tail from Sairee · excellent coral, calmer than the main dive sites · go early for the best visibility</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJtztyeVOfVTARt40FSRGE2wY">Maps</a></td></tr>
+  <tr><td></td><td>💡 Breakfast tip</td><td>Sairee Beach Road has great cafés for a pre-snorkel coffee and something light — pick one that looks good on the way</td><td>—</td></tr>
+</table>
+
+<h3>Afternoon — Long Lunch &amp; Beach</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Afternoon</td><td>Long lunch at NDIIGO or Sairee</td><td>NDIIGO Beach Club for cocktails and food with a view · or find a beach shack on Sairee and order whatever they have · eat slowly · this is the rhythm of Koh Tao</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJBxHjfGShVTARCEKs5f-N0UE">Maps</a></td></tr>
+</table>
+
+<h3>Late Afternoon — Back to Villa</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~16:30</td><td>Back to The Rocks Villas</td><td>Freshen up · penultimate evening on the island — make it count</td><td>—</td></tr>
+</table>
+
+<h3>Evening</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>Best dinner of the stay</td><td>Go back to your favourite restaurant from the week · or try somewhere new on Sairee · cocktails on the beach after · stars over the Gulf of Thailand · no rush to get home</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Good night for a last Thai massage before the travel day on Wednesday — ±1 hour after dinner and you'll sleep perfectly.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day18" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Tue Jun 9</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 18</span><br><span style="font-size:12pt;">Last Day on Koh Tao — Favourite Spot &amp; Goodbye</span></h2>
+<div class="day-card-inner">
+<p><em>Go back to whichever bay made you happiest. One last snorkel. Pack this afternoon. Watch the sun go down one final time.</em></p>
+
+<h3>Morning — Favourite Spot</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Morning</td><td>One last snorkel</td><td>Wherever was best this week — go back and do it again · mornings are always clearest</td><td>—</td></tr>
+</table>
+
+<h3>Afternoon — Villa &amp; Packing</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Afternoon</td><td>Back to villa · pack</td><td>Pack everything this afternoon · confirm Mr Boy tonight for the morning transfer to Mae Haad pier · no scooter tomorrow — Mr Boy takes you down</td><td>—</td></tr>
+</table>
+
+<h3>Late Afternoon — Last Sunset</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>~17:00</td><td>Sairee — last sunset</td><td>Cold drink · feet in the sand · watch the sun disappear over the Gulf one final time</td><td><a href="https://www.google.com/maps/place/?q=place_id:ChIJZQRiX--hVTARRdqTXjlbGwA">Maps</a></td></tr>
+</table>
+
+<h3>Evening — Last Dinner</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>Evening</td><td>Return scooter</td><td>Drop the scooter back at the rental shop in Mae Haad before dinner — no scooter needed tomorrow, Mr Boy handles the transfer to the pier</td><td>—</td></tr>
+  <tr><td>Evening</td><td>Last dinner on the island</td><td>Go back to your favourite place · walk slowly home under the stars · early night — ferry is at 09:30 tomorrow</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Everything packed tonight. Mr Boy confirmed for the morning transfer to Mae Haad pier. Scooter already returned. Lomprayah check-in 08:45 · ferry 09:30 sharp.</div>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> Seven days on one small island and it still feels like there's more to see. That's Koh Tao. You'll be back.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+</div><!-- end kohtao -->
+
+<!-- ====== TRAVEL DAY 19 ====== -->
+<div class="travel">
+
+<div id="day19" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Wed Jun 10</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 19</span><br><span style="font-size:12pt;">Traveling — Koh Tao → Surat Thani → Bangkok</span></h2>
+<div class="day-card-inner">
+<p><em>Another long travel day — ferry, bus transfer, flight. Straightforward but tiring. Arrive late in Bangkok, keep the evening simple.</em></p>
+
+<h3>Morning — Lomprayah to Surat Thani</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>08:45</td><td>Arrive at Mae Haad Pier</td><td>Check in for Lomprayah · ticket ready · small café at the pier · last Thai iced coffee before Bangkok</td><td>—</td></tr>
+  <tr><td>09:30</td><td>Lomprayah departs Mae Haad</td><td>Koh Tao → Surat Thani · your ticket includes the bus transfer from Surat Thani pier to the airport — just follow Lomprayah staff signs on arrival, no separate taxi needed</td><td>—</td></tr>
+</table>
+<div class="tip">💡 The ferry + bus transfer takes ±5 hours total. Bring something to read, snacks, headphones. Sea crossing ±2.5 hrs, then bus ±1.5 hrs to the airport.</div>
+
+<h3>Afternoon — Surat Thani to Bangkok</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th><th>Maps</th></tr>
+  <tr><td>15:00</td><td>Arrive Surat Thani Airport (URT)</td><td>Small regional airport · check in for AirAsia · eat something here — no meal service on AirAsia and it's a 75 min flight</td><td>—</td></tr>
+  <tr><td>19:05</td><td>Departure to Bangkok Don Mueang</td><td>Flight <strong>FD3332</strong> · AirAsia · URT → DMK · ±1h 15min</td><td>—</td></tr>
+  <tr><td>20:20</td><td>Arrival Bangkok Don Mueang (DMK)</td><td>DMK is Bangkok's northern airport — different from Suvarnabhumi. <strong>Tomorrow's KLM flight departs from Suvarnabhumi (BKK)</strong> — don't confuse them.</td><td>—</td></tr>
+  <tr><td>~21:15</td><td>Transfer to hotel</td><td>Grab is easiest late at night (±300–400 THB to Sukhumvit) · Bus A1 to BTS Mo Chit is cheaper but slower · budget ±45 min</td><td>—</td></tr>
+  <tr><td>~22:00</td><td>Check in hotel</td><td class="tbd">Accommodation TBD — Sukhumvit or Silom for easy airport access tomorrow</td><td>—</td></tr>
+</table>
+<div class="tip">💡 Late arrival after a long day — shower, find something nearby to eat (Sukhumvit has 24hr food everywhere), and sleep. Tomorrow is the last full day.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+</div><!-- end travel -->
+
+<!-- ====== BANGKOK RETURN ====== -->
+<div class="bangkok">
+
+<div class="section-banner">✈️ BANGKOK — Day 20–21</div>
+<div class="info-strip">
+  <p>🏨 <strong>Hotel:</strong> <span class="tbd">TBD — Sukhumvit or Silom recommended for easy airport access</span></p>
+  <p>⚠️ <strong>Important:</strong> Day 21 flight departs from <strong>Suvarnabhumi (BKK)</strong> — NOT Don Mueang. Allow time.</p>
+</div>
+
+<div id="day20" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Thu Jun 11</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 20</span><br><span style="font-size:12pt;">Bangkok — Last Full Day</span></h2>
+<div class="day-card-inner">
+<p><em>One last day in Bangkok. Fill it however feels right after 18 days of temples, mountains and islands.</em></p>
+<p><strong>A few ideas depending on energy:</strong></p>
+<ul>
+  <li><strong>One more cultural hit:</strong> Wat Arun (Temple of Dawn) across the river — stunning tiled spires, less crowded than the Grand Palace, best in morning light. Take the short ferry from Tha Tien pier near Wat Pho.</li>
+  <li><strong>Last shop:</strong> Or Tor Kor Market near Chatuchak — the best fresh produce and food market in Bangkok. Or ICONSIAM on the river for a final mall experience with incredible food hall.</li>
+  <li><strong>Pure relaxation:</strong> Thai massage (anywhere in Sukhumvit, ±300–500 THB/hr), pool, cold drinks. You've earned it.</li>
+  <li><strong>Best street food finale:</strong> Jay Fai — Bangkok's most famous cook, Michelin-starred crab omelette on Mahachai Road. Queue early or book weeks ahead online.</li>
+</ul>
+<div class="tip">💡 Pack your checked bags tonight — tomorrow morning must be stress-free. Flight is at 12:05 so leave the hotel by 09:00. Keep only overnight essentials in your backpack.</div>
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+<div id="day21" style="margin-top:32px;"></div>
+<div class="day-card">
+<h2><span style="font-size:16pt;font-weight:bold;">Fri Jun 12</span> <span style="font-size:10pt;font-weight:normal;opacity:0.65;">· Day 21</span><br><span style="font-size:12pt;">Flying Bangkok to Amsterdam — Going Home</span></h2>
+<div class="day-card-inner">
+
+<h3>Morning — Checkout &amp; Suvarnabhumi</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th></tr>
+  <tr><td>08:00</td><td>Checkout hotel</td><td class="tbd">Hotel TBD · store bags if late checkout · grab a last Thai breakfast</td></tr>
+  <tr><td>09:00</td><td>Transfer to Suvarnabhumi (BKK)</td><td>Airport Rail Link from <strong>Phaya Thai</strong> or <strong>Makkassan</strong> · ±30 min · or Grab (±300–400 THB · ±45 min) · <strong>NOT Don Mueang</strong></td></tr>
+  <tr><td>09:05</td><td>Arrive Suvarnabhumi (BKK)</td><td>KLM check-in · 3 hours before departure · drop bags then browse duty free — last chance for Thai snacks to bring home (dried mango, Tom Yum crisps, Thai tea, coconut candies)</td></tr>
+  <tr><td>12:05</td><td>Departure to Amsterdam</td><td>Flight <strong>KL0844</strong> · KLM · BKK → AMS · ±11.5 hours</td></tr>
+</table>
+<div class="tip">💡 Download something to watch before you board. Sleep when you can. Think about everything you've done in 21 days.</div>
+
+<h3>Evening — Arrival Amsterdam &amp; Home</h3>
+<table>
+  <tr><th>Time</th><th>Activity</th><th>Info</th></tr>
+  <tr><td>19:10</td><td>Arrival Amsterdam Schiphol (AMS)</td><td>Baggage claim · both checked bags, both backpacks · customs is usually quick for Thailand arrivals</td></tr>
+  <tr><td>~20:00</td><td>Train Schiphol → Utrecht Centraal</td><td>Direct Intercity · ±30 min · from Schiphol station underneath the terminal · every 15 min</td></tr>
+  <tr><td>~20:30</td><td>Arrive Utrecht Centraal</td><td>Bus to Maarssen · or just take a taxi — after 11.5 hours on a plane you're allowed</td></tr>
+  <tr><td>~21:00</td><td>Home — Dr. R. van Lutterveltstraat 52</td><td>21 days. Bangkok temples. Mountain sunrises. Sticky waterfalls. Island time. Maria Elena's first Thailand. Well done both. 🇹🇭</td></tr>
+</table>
+<div class="tip-maria">🌸 <strong>Maria Elena:</strong> Thailand will stay with you — the smells, the sounds, the food, the kindness of the people. You'll be back.</div>
+
+<a href="#top" class="back-to-top">↑ Back to index</a>
+</div></div>
+
+</div><!-- end bangkok -->
+
+<!-- ====== BOOKINGS & COSTS ====== -->
+<hr>
+<div id="bookings"></div>
+<h2 style="background:#444;color:white;padding:8px 14px;border-radius:5px;">📋 Bookings &amp; Contacts</h2>
+<table class="bookings-table">
+  <tr><th>What</th><th>When</th><th>Contact / Status</th></tr>
+  <tr><td>Flight KL843 (AMS→BKK)</td><td>Sat May 23</td><td>17:15 depart · 09:30+1 arrive · KLM · Schiphol Hall 3</td></tr>
+  <tr><td>Ko van Kessel bike tour</td><td>Mon May 25</td><td class="paid">✓ Already paid in full · meal included</td></tr>
+  <tr><td>Cielo Sky Bar</td><td>Tue May 26</td><td>Reservation 18:00 · deposit 3,000 THB · Tel: +66 0819164270 · <a href="https://www.cieloskybar.com">cieloskybar.com</a></td></tr>
+  <tr><td>Flight TG112 (BKK→CNX)</td><td>Wed May 27</td><td>14:55 depart · 16:15 arrive · Thai Airways · Suvarnabhumi</td></tr>
+  <tr><td>Europcar Chiang Mai</td><td>Wed May 27 – Tue Jun 2</td><td>Pick up &amp; return at CNX airport · desk in arrivals hall</td></tr>
+  <tr><td>Han Teung Chiangmai</td><td>Thu May 28</td><td>Reserve in advance · Google Maps or phone</td></tr>
+  <tr><td>Makkha Spa — Ancient House</td><td>Sat May 30</td><td><a href="https://www.makkhaspa.com">makkhaspa.com</a> · Soi Ratchamanka 8</td></tr>
+  <tr><td>Zabb E Lee cooking class</td><td>Sun May 31</td><td>WhatsApp +66 93 267 9572 · ask for Bo · morning session</td></tr>
+  <tr><td>Makkha Spa — Ancient House</td><td>Mon Jun 1</td><td><a href="https://www.makkhaspa.com">makkhaspa.com</a> · Soi Ratchamanka 8</td></tr>
+  <tr><td>Flight PG242 (CNX→USM)</td><td>Tue Jun 2</td><td>11:35 depart · 13:20 arrive · Bangkok Airways</td></tr>
+  <tr><td>Lomprayah ferry (Nathon→Koh Tao)</td><td>Tue Jun 2</td><td>16:00 depart Nathon Pier · arrive ~18:00 Mae Haad · ±300 THB taxi to pier</td></tr>
+  <tr><td>Lomprayah ferry (Koh Tao→Surat Thani)</td><td>Wed Jun 10</td><td>09:30 depart Mae Haad · 15:00 arrive URT airport · transfer included in ticket</td></tr>
+  <tr><td>Flight FD3332 (URT→DMK)</td><td>Wed Jun 10</td><td>19:05 depart · 20:20 arrive · AirAsia · Don Mueang</td></tr>
+  <tr><td>Flight KL0844 (BKK→AMS)</td><td>Fri Jun 12</td><td>12:05 depart · 19:10 arrive · KLM · <strong>Suvarnabhumi (BKK)</strong></td></tr>
+</table>
+
+<div id="costs"></div>
+<h2 style="background:#444;color:white;padding:8px 14px;border-radius:5px;">💰 Costs — Estimated per person</h2>
+<table class="costs-table">
+  <tr><th>Item</th><th>Cost (THB)</th><th>Notes</th></tr>
+  <tr><td>ATM withdrawal fee (Bangkok)</td><td>±220 THB</td><td>Per withdrawal — take out 5,000–10,000 THB at a time</td></tr>
+  <tr><td>Airport Rail Link (per trip)</td><td>±45 THB</td><td>Cheapest way city ↔ Suvarnabhumi</td></tr>
+  <tr><td>Grand Palace</td><td>500 THB</td><td>Cash only at the gate</td></tr>
+  <tr><td>Wat Pho</td><td>200 THB</td><td></td></tr>
+  <tr><td>Ko van Kessel bike tour</td><td class="paid">Already paid</td><td>Meal &amp; drinks included</td></tr>
+  <tr><td>Old Town temples Chiang Mai (3x)</td><td>±120 THB</td><td>Wat Chiang Man is free</td></tr>
+  <tr><td>Wat Pha Lat</td><td>Free</td><td>Donation welcome</td></tr>
+  <tr><td>Doi Suthep</td><td>30 THB</td><td></td></tr>
+  <tr><td>Doi Inthanon park entry</td><td>300 THB + 20 THB car</td><td>Pay at the gate · covers all stops in the park</td></tr>
+  <tr><td>Meditation day — Wat Suan Dok</td><td>±1,500 THB (couple)</td><td>Donation based · suggested amount</td></tr>
+  <tr><td>Makkha Spa — scrub + massage</td><td>±1,500–2,500 THB</td><td>Per person · book package deal</td></tr>
+  <tr><td>Zabb E Lee cooking class</td><td>±1,200–1,500 THB</td><td>Per person · includes market visit + transport</td></tr>
+  <tr><td>Bua Tong Sticky Waterfalls</td><td>Free</td><td>Lockers 30 THB</td></tr>
+  <tr><td>Taxi Koh Samui airport → Nathon Pier</td><td>±300 THB</td><td>Agree price before getting in</td></tr>
+  <tr><td>PADI Open Water diving (Koh Tao)</td><td>±10,000 THB</td><td>Optional · 3–4 days · Maria Elena — highly recommended</td></tr>
+</table>
+
+</body>
+</html>
